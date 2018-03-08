@@ -51,5 +51,3 @@ docker-build:
 
 docker-serve:
 	${DEV_ENV_CMD} ${IMAGE} $(MKDOCSSERVE)
-
-run: docker-build docker-serve

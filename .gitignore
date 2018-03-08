@@ -20,5 +20,3 @@ bower_components
 venv/
 
 _build/
-
-.DS_Store
