@@ -1,3 +1,9 @@
+
+|![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Deis Workflow will soon no longer be maintained.<br />Please [read the announcement](https://deis.com/blog/2017/deis-workflow-final-release/) for more detail. |
+|---:|---|
+| 09/07/2017 | Deis Workflow [v2.18][] final release before entering maintenance mode |
+| 03/01/2018 | End of Workflow maintenance: critical patches no longer merged |
+
 ![](https://deis.com/images/deis-logo.png)
 
 [![Slack Status](https://slack.deis.io/badge.svg)](https://slack.deis.io/)
@@ -68,16 +74,9 @@ To serve documenation run: `make serve` or `make docker-serve`.
 
 Then view the documentation on [http://localhost:8000](http://localhost:8000) or `http://DOCKER_IP:8000`.
 
-## License
-
-Copyright 2013, 2014, 2015 Engine Yard, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>.
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
 [k8s-home]: http://kubernetes.io
 [install-k8s]: http://kubernetes.io/gettingstarted/
 [mkdocs]: http://www.mkdocs.org/
 [issues]: https://github.com/deis/workflow/issues
 [prs]: https://github.com/deis/workflow/pulls
+[v2.18]: https://github.com/deis/workflow/releases/tag/v2.18.0
