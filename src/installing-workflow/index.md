@@ -11,13 +11,28 @@ Deis Workflow, follow the [quickstart guide](../quickstart/index.md) for assista
 
 ## Check Your Setup
 
-Check that the `helm` command is available and the version is 2.1.0 or newer.
+Check that the `helm` command is available and the version is v2.5.0 or newer.
 
 ```
 $ helm version
-Client: &version.Version{SemVer:"v2.1.0", GitCommit:"b7b648456ba15d3d190bb84b36a4bc9c41067cf3", GitTreeState:"clean"}
-Server: &version.Version{SemVer:"v2.1.0", GitCommit:"b7b648456ba15d3d190bb84b36a4bc9c41067cf3", GitTreeState:"clean"}
+Client: &version.Version{SemVer:"v2.5.0", GitCommit:"012cb0ac1a1b2f888144ef5a67b8dab6c2d45be6", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.5.0", GitCommit:"012cb0ac1a1b2f888144ef5a67b8dab6c2d45be6", GitTreeState:"clean"}
 ```
+
+### Check Your Authorization
+
+If your cluster uses [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/) for authorization, `helm` will need to be granted the necessary permissions to create Workflow resources.
+This can be done with the following commands:
+
+```
+$ kubectl create sa tiller-deploy -n kube-system
+$ kubectl create clusterrolebinding helm --clusterrole=cluster-admin --serviceaccount=kube-system:tiller-deploy
+$ helm init --service-account=tiller-deploy
+```
+
+If `helm` is already installed in cluster without sufficient rights, simply add `--upgrade` to the `init` command above.
+
+**Note**: Specific `helm` permissions haven't been sorted yet and details may change (watch `helm` [docs](https://github.com/kubernetes/helm/tree/master/docs))
 
 ## Choose Your Deployment Strategy
 
@@ -32,6 +47,10 @@ More rigorous installations would benefit from using outside sources for the fol
 * [Registry](configuring-registry.md) - This includes [quay.io](https://quay.io), [dockerhub](https://hub.docker.com), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google GCR](https://cloud.google.com/container-registry/).
 * [Redis](../managing-workflow/platform-logging.md#configuring-off-cluster-redis) - Such as AWS Elasticache
 * [InfluxDB](../managing-workflow/platform-monitoring.md#configuring-off-cluster-influxdb) and [Grafana](../managing-workflow/platform-monitoring.md#off-cluster-grafana)
+
+#### (Experimental) Kubernetes Native Ingress
+
+Workflow now offers [experimental native ingress](experimental-native-ingress.md) to take advantage of native Kubernetes routing. Any compatible Kubernetes ingress controller can be used in place of Workflow's nginx-based deis-router. Follow [this guide](experimental-native-ingress.md) to enable experimental native ingress.
 
 ## Add the Deis Chart Repository
 
@@ -72,17 +91,22 @@ Here, it can be seen that the controller, builder and registry all took a few lo
 
 ```
 $ kubectl --namespace=deis get pods
-NAME                          READY     STATUS    RESTARTS   AGE
-deis-builder-hy3xv            1/1       Running   5          5m
-deis-controller-g3cu8         1/1       Running   5          5m
-deis-database-rad1o           1/1       Running   0          5m
-deis-logger-fluentd-1v8uk     1/1       Running   0          5m
-deis-logger-fluentd-esm60     1/1       Running   0          5m
-deis-logger-sm8b3             1/1       Running   0          5m
-deis-minio-4ww3t              1/1       Running   0          5m
-deis-registry-asozo           1/1       Running   1          5m
-deis-router-k1ond             1/1       Running   0          5m
-deis-workflow-manager-68nu6   1/1       Running   0          5m
+NAME                                     READY     STATUS    RESTARTS   AGE
+deis-builder-574483744-l15zj             1/1       Running   0          4m
+deis-controller-3953262871-pncgq         1/1       Running   2          4m
+deis-database-83844344-47ld6             1/1       Running   0          4m
+deis-logger-176328999-wjckx              1/1       Running   4          4m
+deis-logger-fluentd-zxnqb                1/1       Running   0          4m
+deis-logger-redis-304849759-1f35p        1/1       Running   0          4m
+deis-minio-676004970-nxqgt               1/1       Running   0          4m
+deis-monitor-grafana-432627134-lnl2h     1/1       Running   0          4m
+deis-monitor-influxdb-2729788615-m9b5n   1/1       Running   0          4m
+deis-monitor-telegraf-wmcmn              1/1       Running   1          4m
+deis-nsqd-3597503299-6mn2x               1/1       Running   0          4m
+deis-registry-756475849-lwc6b            1/1       Running   1          4m
+deis-registry-proxy-96c4p                1/1       Running   0          4m
+deis-router-2126433040-6sl6z             1/1       Running   0          4m
+deis-workflow-manager-2528409207-jkz2r   1/1       Running   0          4m
 ```
 
 Once all of the pods are in the `READY` state, Deis Workflow is up and running!
@@ -91,4 +115,4 @@ After installing Workflow, [register a user and deploy an application](../quicks
 
 [Kubernetes v1.3.4+]: system-requirements.md#kubernetes-versions
 [helm]: https://github.com/kubernetes/helm/blob/master/docs/install.md
-[valuesfile]: https://charts.deis.com/workflow/values-v2.10.0.yaml
+[valuesfile]: https://charts.deis.com/workflow/values-v2.18.0.yaml

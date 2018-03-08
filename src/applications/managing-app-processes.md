@@ -48,7 +48,7 @@ The format of a `Procfile` is one process type per line, with each line containi
 
 The syntax is defined as:
 
-* `<process type>` – an alphanumeric string, is a name for your command, such as web, worker, urgentworker, clock, etc.
+* `<process type>` – a lowercase alphanumeric string, is a name for your command, such as web, worker, urgentworker, clock, etc.
 * `<command>` – a command line to launch the process, such as `rake jobs:work`.
 
 This example Procfile specifies two types, `web` and `sleeper`. The `web` process launches a web server on port 5000 and
@@ -255,5 +255,5 @@ the Pod to a new node.
 [buildpacks]: ../applications/using-buildpacks.md
 [dockerfile]: ../applications/using-dockerfiles.md
 [docker image]: ../applications/using-docker-images.md
-[HPA]: http://kubernetes.io/docs/user-guide/horizontal-pod-autoscaling/
-[autoscale-algo]: https://github.com/kubernetes/kubernetes/blob/master/docs/design/horizontal-pod-autoscaler.md#autoscaling-algorithm
+[HPA]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+[autoscale-algo]: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/horizontal-pod-autoscaler.md#autoscaling-algorithm

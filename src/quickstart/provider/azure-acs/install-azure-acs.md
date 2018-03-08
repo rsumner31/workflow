@@ -2,15 +2,15 @@
 
 ## Check Your Setup
 
-First check that the `helm` command is available and the version is v2.0.0 or newer.
+First check that the `helm` command is available and the version is v2.5.0 or newer.
 
 ```
 $ helm version
-Client: &version.Version{SemVer:"v2.0.0", GitCommit:"51bdad42756dfaf3234f53ef3d3cb6bcd94144c2", GitTreeState:"clean"}
-Server: &version.Version{SemVer:"v2.0.0", GitCommit:"51bdad42756dfaf3234f53ef3d3cb6bcd94144c2", GitTreeState:"clean"}
+Client: &version.Version{SemVer:"v2.5.0", GitCommit:"012cb0ac1a1b2f888144ef5a67b8dab6c2d45be6", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.5.0", GitCommit:"012cb0ac1a1b2f888144ef5a67b8dab6c2d45be6", GitTreeState:"clean"}
 ```
 
-Finally, intialize Helm:
+Finally, initialize Helm:
 ```
 helm init
 ```
@@ -29,11 +29,11 @@ $ helm repo add deis https://charts.deis.com/workflow
 
 ## Create New Azure Storage Account
 
-It is recommended to use a dedicated storage account for the operational aspects of Workflow, which includes storing slug and container images, database backups, and disaster recovery. This storage account is passed as parameters during the `helm install` command in the next step. Replace the `SA_NAME` variable with a unique name for your storage account and execute these commands.
+It is recommended to use a dedicated storage account for the operational aspects of Workflow, which includes storing slug and container images, database backups, and disaster recovery. This storage account is passed as parameters during the `helm install` command in the next step. Replace the `AZURE_SA_NAME` variable with a unique name for your storage account and execute these commands.
 ```
-$ export SA_NAME=YourGlobalUniqueName
-$ az storage account create -n $SA_NAME -l $DC_LOCATION -g $RG_NAME --sku Standard_LRS
-$ export SA_KEY=`az storage account keys list -n $SA_NAME -g $RG_NAME --query [0].value --output tsv`
+$ export AZURE_SA_NAME=YourGlobalUniqueName
+$ az storage account create -n $AZURE_SA_NAME -l $AZURE_DC_LOCATION -g $AZURE_RG_NAME --sku Standard_LRS
+$ export AZURE_SA_KEY=`az storage account keys list -n $AZURE_SA_NAME -g $AZURE_RG_NAME --query [0].value --output tsv`
 
 ```
 
@@ -44,7 +44,7 @@ $ export SA_KEY=`az storage account keys list -n $SA_NAME -g $RG_NAME --query [0
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace=deis --set global.storage=azure,azure.accountname=$SA_NAME,azure.accountkey=$SA_KEY,azure.registry_container=registry,azure.database_container=database,azure.builder_container=builder
+$ helm install deis/workflow --namespace=deis --set global.storage=azure,azure.accountname=$AZURE_SA_NAME,azure.accountkey=$AZURE_SA_KEY,azure.registry_container=registry,azure.database_container=database,azure.builder_container=builder
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.

@@ -1,3 +1,5 @@
+# Install Deis Workflow on Minikube
+
 ## Check Your Setup
 
 First check that the `helm` command is available and the version is v2.5.0 or newer.
@@ -25,13 +27,7 @@ $ helm repo add deis https://charts.deis.com/workflow
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace deis
-```
-
-If you are using [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/):
-
-```
-$ helm install deis/workflow --namespace deis --set global.use_rbac=true
+$ helm install deis/workflow --namespace deis --set router.host_port.enabled=true
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.

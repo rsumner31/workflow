@@ -13,18 +13,18 @@ pages:
       - Boot: quickstart/provider/aws/boot.md
       - DNS: quickstart/provider/aws/dns.md
       - Install Workflow: quickstart/provider/aws/install-aws.md
-    - GKE:
-      - Boot: quickstart/provider/gke/boot.md
-      - DNS: quickstart/provider/gke/dns.md
-      - Install Workflow: quickstart/provider/gke/install-gke.md
     - Azure:
       - Boot: quickstart/provider/azure-acs/boot.md
       - DNS: quickstart/provider/azure-acs/dns.md
       - Install Workflow: quickstart/provider/azure-acs/install-azure-acs.md
-    - Vagrant:
-      - Boot: quickstart/provider/vagrant/boot.md
-      - DNS: quickstart/provider/vagrant/dns.md
-      - Install Workflow: quickstart/provider/vagrant/install-vagrant.md
+    - GKE:
+      - Boot: quickstart/provider/gke/boot.md
+      - DNS: quickstart/provider/gke/dns.md
+      - Install Workflow: quickstart/provider/gke/install-gke.md
+    - Minikube:
+      - Boot: quickstart/provider/minikube/boot.md
+      - DNS: quickstart/provider/minikube/dns.md
+      - Install Workflow: quickstart/provider/minikube/install-minikube.md
     - Deploy Your First App: quickstart/deploy-an-app.md
   - Understanding Workflow:
     - Concepts: understanding-workflow/concepts.md
@@ -37,6 +37,7 @@ pages:
     - Configuring Postgres: installing-workflow/configuring-postgres.md
     - Configuring the Registry: installing-workflow/configuring-registry.md
     - Chart Provenance: installing-workflow/chart-provenance.md
+    - Experimental Native Ingress: installing-workflow/experimental-native-ingress.md
   - Users:
     - Command Line Interface: users/cli.md
     - Users and Registration: users/registration.md
@@ -49,6 +50,7 @@ pages:
     - Managing App Processes: applications/managing-app-processes.md
     - Managing App Configuration: applications/managing-app-configuration.md
     - Managing App Lifecycle: applications/managing-app-lifecycle.md
+    - Inter-app Communication: applications/inter-app-communication.md
     - Resource Limits: applications/managing-resource-limits.md
     - Domains and Routing: applications/domains-and-routing.md
     - SSL Certificates: applications/ssl-certificates.md
@@ -90,21 +92,30 @@ pages:
     - Controller API v2.0: reference-guide/controller-api/v2.0.md
     - Controller API v2.1: reference-guide/controller-api/v2.1.md
     - Controller API v2.2: reference-guide/controller-api/v2.2.md
+    - Controller API v2.3: reference-guide/controller-api/v2.3.md
   - Changelogs:
-    - v2.0.0: changelogs/v2.0.0.md
-    - v2.1.0: changelogs/v2.1.0.md
-    - v2.2.0: changelogs/v2.2.0.md
-    - v2.3.0: changelogs/v2.3.0.md
-    - v2.4.0: changelogs/v2.4.0.md
-    - v2.4.1: changelogs/v2.4.1.md
-    - v2.4.2: changelogs/v2.4.2.md
-    - v2.5.0: changelogs/v2.5.0.md
-    - v2.6.0: changelogs/v2.6.0.md
-    - v2.7.0: changelogs/v2.7.0.md
-    - v2.8.0: changelogs/v2.8.0.md
-    - v2.9.0: changelogs/v2.9.0.md
-    - v2.9.1: changelogs/v2.9.1.md
+    - v2.18.0: changelogs/v2.18.0.md
+    - v2.17.0: changelogs/v2.17.0.md
+    - v2.16.0: changelogs/v2.16.0.md
+    - v2.15.0: changelogs/v2.15.0.md
+    - v2.14.0: changelogs/v2.14.0.md
+    - v2.13.0: changelogs/v2.13.0.md
+    - v2.12.0: changelogs/v2.12.0.md
+    - v2.11.0: changelogs/v2.11.0.md
     - v2.10.0: changelogs/v2.10.0.md
+    - v2.9.1: changelogs/v2.9.1.md
+    - v2.9.0: changelogs/v2.9.0.md
+    - v2.8.0: changelogs/v2.8.0.md
+    - v2.7.0: changelogs/v2.7.0.md
+    - v2.6.0: changelogs/v2.6.0.md
+    - v2.5.0: changelogs/v2.5.0.md
+    - v2.4.2: changelogs/v2.4.2.md
+    - v2.4.1: changelogs/v2.4.1.md
+    - v2.4.0: changelogs/v2.4.0.md
+    - v2.3.0: changelogs/v2.3.0.md
+    - v2.2.0: changelogs/v2.2.0.md
+    - v2.1.0: changelogs/v2.1.0.md
+    - v2.0.0: changelogs/v2.0.0.md
 theme_dir: themes/deis
 docs_dir: src
 markdown_extensions:

@@ -1,12 +1,20 @@
 # Configuring Load Balancers
 
-Depending on what distribution of Kubernetes you use and where you host it, installation of Deis Workflow may automatically provision an external (to Kubernetes) load balancer or similar mechanism for directing inbound traffic from beyond the cluster to the Deis router(s).  For example, [kube-aws](https://coreos.com/kubernetes/docs/latest/kubernetes-on-aws.html) and [Google Container Engine](https://cloud.google.com/container-engine/) both do this.  On some other platforms-- Vagrant or bare metal, for instance-- this must either be accomplished manually or does not apply at all.
+Depending on what distribution of Kubernetes you use and where you host it, installation of Deis Workflow may automatically provision an external (to Kubernetes) load balancer or similar mechanism for directing inbound traffic from beyond the cluster to the Deis router(s).  For example, [kube-aws](https://coreos.com/kubernetes/docs/latest/kubernetes-on-aws.html) and [Google Container Engine](https://cloud.google.com/container-engine/) both do this.  On some other platforms-- Minikube or bare metal, for instance-- this must either be accomplished manually or does not apply at all.
 
 ## Idle connection timeouts
 
 If a load balancer such as the one described above does exist (whether created automatically or manually) and if you intend on handling any long-running requests, the load balancer (or similar) may require some manual configuration to increase the idle connection timeout.  Typically, this is most applicable to AWS and Elastic Load Balancers, but may apply in other cases as well.  It does not apply to Google Container Engine, as the idle connection timeout cannot be configured there, but also works as-is.
 
-If, for instance, Deis Workflow were installed on kube-aws, this timeout should be increased to a recommended value of 1200 seconds.  This will ensure the load balancer does not hang up on the client during long-running operations like an application deployment.  Directions for this can be found [here](http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/config-idle-timeout.html).
+If, for instance, Deis Workflow were installed on kube-aws, this timeout should be increased to a recommended value of 1200 seconds.  This will ensure the load balancer does not hang up on the client during long-running operations like an application deployment.  The AWS-specific annotation below will be included by default in the router service starting in Workflow v2.13.0.
+
+If you are running Kubernetes v1.4 or later but a Workflow version earlier than v2.13.0, you should configure the idle timeout using this service annotation:
+
+```
+$ kubectl --namespace=deis annotate service/deis-router service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout=1200
+```
+
+On older Kubernetes versions, you have to [configure the idle timeout manually](http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/config-idle-timeout.html), but it will reset back to the default of 60 seconds whenever Kubernetes needs to reconfigure the load balancer, for example because a node in your cluster was added or removed. Remember to re-apply your manual changes if that happens.
 
 ## Configuring PROXY protocol
 
