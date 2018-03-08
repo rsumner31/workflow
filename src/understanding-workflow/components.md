@@ -28,7 +28,7 @@ majority of the platforms state. Backups and WAL files are pushed to object
 storage via [WAL-E][]. When the database is restarted, backups are fetched and
 replayed from object storage so no data is lost.
 
-## Builder
+## Builder: builder, slugbuilder, and dockerbuilder
 
 **Project Location:** [deis/builder](https://github.com/deis/builder)
 

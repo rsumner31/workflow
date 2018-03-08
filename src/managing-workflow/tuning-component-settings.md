@@ -112,24 +112,12 @@ BACKUPS_TO_RETAIN | number of base backups the backing store should retain (defa
 
 ## Customizing Fluentd
 
-The following values can be changed in the `values.yaml` file or by using the `--set` flag with the Helm CLI. 
+The following environment variables are tunable for [Fluentd][logger]:
 
-Key               | Default | Description
-------------------| --------| ---------------------------------
-syslog.host | "" | Host value of a syslog endpoint
-syslog.port | "" | Port value of a syslog endpoint
-sources.start_script | false | Capture kubernetes start script logs
-sources.docker | false | Capture docker daemon logs
-sources.etcd | false | Capture etcd logs
-sources.kubelet | false | Capture kubelet logs
-sources.kube_api | false | Capture Kubernetes API logs
-sources.controller | false | Capture Kubernetes Controller logs
-sources.scheduler | false | Capture Kubernetes Scheduler logs
-output.disable_deis | false | Disable the Deis output plugin
-boot.install_build_tools | false | Install the build tools package. This is useful when using custom plugins
-daemon_environment | | Takes key-value pairs and turns them into environment variables.
-
-For more information about the various environment variables that can be set please see the [README](https://github.com/deis/fluentd/blob/master/README.md)
+Setting           | Description
+----------------- | ---------------------------------
+SYSLOG_HOST_1     | The hostname of a remote syslog endpoint for shipping logs
+SYSLOG_PORT_1     | The port of a remote syslog endpoint for shipping logs
 
 ## Customizing the Logger
 
@@ -142,22 +130,10 @@ NUMBER_OF_LINES   | How many lines to store in the ring buffer (default: 1000)
 
 ## Customizing the Monitor
 
-### [Grafana](https://grafana.com/)
-We have exposed some of the more useful configuration values directly in the chart. This allows them to be set using either the `values.yaml` file or by using the `--set` flag with the Helm CLI. You can see these options below:
-
-Setting           | Default Value  | Description
------------------ | -------------- |------------ |
-user   | "admin" | The first user created in the database (this user has admin privileges)
-password | "admin" | Password for the first user.
-allow_sign_up | "true" | Allows users to sign up for an account.
-
-For a list of other options you can set by using environment variables please see the [configuration file](https://github.com/deis/monitor/blob/master/grafana/rootfs/usr/share/grafana/grafana.ini.tpl) in Github.
-
-### [Telegraf](https://docs.influxdata.com/telegraf)
-For a list of configuration values that can be set by using environment variables please see the following [configuration file](https://github.com/deis/monitor/blob/master/telegraf/rootfs/config.toml.tpl).
-
-### [InfluxDB](https://docs.influxdata.com/influxdb)
-You can find a list of values that can be set using environment variables [here](https://github.com/deis/monitor/blob/master/influxdb/rootfs/home/influxdb/config.toml.tpl).
+The monitor component uses [Telegraf](https://github.com/influxdata/telegraf) under the hood, and
+derives most of its configuration from it. Please see
+[telegraf configuration](https://github.com/influxdata/telegraf/blob/master/docs/CONFIGURATION.md)
+for more information on tuning the [Monitor][] component.
 
 ## Customizing the Registry
 
