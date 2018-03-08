@@ -19,7 +19,7 @@ should move it somewhere in your $PATH:
 Check your work by running `deis version`:
 
     $ deis version
-    v2.13.0
+    v2.12.0
 
 !!! note
     Note that version numbers may vary as new releases become available
@@ -42,7 +42,7 @@ Cloud-based options:
 * [Amazon Web Services](provider/aws/boot.md): uses Kubernetes upstream `kube-up.sh` to boot a cluster on AWS EC2.
 * [Azure Container Service](provider/azure-acs/boot.md): provides a managed Kubernetes environment.
 
-If you would like to test on your local machine follow our guide for [Minikube](provider/minikube/boot.md).
+If you would like to test on your local machine follow our guide for [Vagrant](provider/vagrant/boot.md).
 
 
 [helm-install]: https://github.com/kubernetes/helm#install
