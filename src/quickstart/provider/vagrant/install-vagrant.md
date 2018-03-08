@@ -1,4 +1,4 @@
-# Install Deis Workflow on Minikube
+# Install Deis Workflow on Vagrant
 
 ## Check Your Setup
 
