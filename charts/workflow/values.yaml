@@ -106,7 +106,7 @@ controller:
   # enabled - allows for open registration
   # disabled - turns off open registration
   # admin_only - allows for registration by an admin only.
-  registration_mode: "admin_only"
+  registration_mode: "enabled"
 
 database:
   # The username and password to be used by the on-cluster database.
@@ -141,23 +141,12 @@ monitor:
   grafana:
     user: "admin"
     password: "admin"
-    # Configure the following ONLY if you want persistence for on-cluster grafana
-    # GCP PDs and EBS volumes are supported only
-    persistence:
-      enabled: false # Set to true to enable persistence
-      size: 5Gi # PVC size
-
+  # Configure the following ONLY if using an off-cluster Influx database
   influxdb:
-    # Configure the following ONLY if using an off-cluster Influx database
     url: "my.influx.url"
     database: "kubernetes"
     user: "user"
     password: "password"
-    # Configure the following ONLY if you want persistence for on-cluster influxdb
-    # GCP PDs and EBS volumes are supported only
-    persistence:
-      enabled: false # Set to true to enable persistence
-      size: 20Gi # PVC size
 
 registry-token-refresher:
   # Time in minutes after which the token should be refreshed.
@@ -193,11 +182,11 @@ router:
   service_annotations:
     #<example-key>: <example-value>
 
-  # Enable to pin router pod hostPort when using vagrant
+  # Enable to pin router pod hostPort when using minikube or vagrant
   host_port:
-    enabled: false
+    enabled: true
 
-  # Service type default to LoadBalancer
+  # Service type default to LoadBalancer 
   # service_type: LoadBalancer
 
 workflow-manager:

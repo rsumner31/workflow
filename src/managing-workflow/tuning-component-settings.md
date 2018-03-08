@@ -5,27 +5,8 @@ application or service on Kubernetes.
 
 After you add the Deis Chart Repository, you can customize the chart using
 `helm inspect values deis/workflow | sed -n '1!p' > values.yaml` before using `helm install` to complete the
-installation.
-
-There are a few ways to customize the respective component:
-
- - If the value is exposed in the `values.yaml` file as derived above, one may modify the section of the component to tune these settings.  The modified value(s) will then take effect at chart installation or release upgrade time via either of the two respective commands:
-
-        $ helm install deis/workflow --namespace deis -f values.yaml
-        $ helm upgrade deis -f values.yaml
-
- - If the value hasn't yet been exposed in the `values.yaml` file, one may edit the component deployment with the tuned setting.  Here we edit the `deis-controller` deployment:
-
-        $ kubectl --namespace deis edit deployment deis-controller
-
-    Add/edit the setting via the appropriate environment variable and value under the `env` section and save.  The updated deployment will recreate the component pod with the new/modified setting.
-
- - Lastly, one may also fetch and edit the chart as served by version control/the chart repository itself:
-
-        $ helm fetch deis/workflow --untar
-        $ $EDITOR workflow/charts/controller/templates/controller-deployment.yaml
-
-    Then run `helm install ./workflow --namespace deis --name deis` to apply the changes, or `helm upgrade deis ./workflow` if the cluster is already running.
+installation. To customize the respective component, edit `values.yaml` and modify the section of
+the component to tune these settings.
 
 ## Setting Resource limits
 
@@ -50,10 +31,9 @@ limits_memory = "50Mi"
 
 The following environment variables are tunable for the [Builder][] component:
 
-Setting                     | Description
---------------------------- | ---------------------------------
-DEBUG                       | Enable debug log output (default: false)
-BUILDER_POD_NODE_SELECTOR   | A node selector setting for builder job. As it may sometimes consume a lot of node resources, one may want a given builder job to run in a specific node only, so it won't affect critical nodes. for example `pool:testing,disk:magnetic`
+Setting | Description
+------- | ---------------------------------
+DEBUG   | Enable debug log output (default: false)
 
 ## Customizing the Controller
 
@@ -61,7 +41,7 @@ The following environment variables are tunable for the [Controller][] component
 
 Setting                                         | Description
 ----------------------------------------------- | ---------------------------------
-REGISTRATION_MODE                               | set registration to "enabled", "disabled", or "admin_only" (default: "admin_only")
+REGISTRATION_MODE                               | set registration to "enabled", "disabled", or "admin_only" (default: "enabled")
 GUNICORN_WORKERS                                | number of [gunicorn][] workers spawned to process requests (default: CPU cores * 4 + 1)
 RESERVED_NAMES                                  | a comma-separated list of names which applications cannot reserve for routing (default: "deis, deis-builder, deis-workflow-manager")
 SLUGRUNNER_IMAGE_NAME                           | the image used to run buildpack application slugs (default: "quay.io/deisci/slugrunner:canary")
@@ -69,25 +49,7 @@ DEIS_DEPLOY_HOOK_URLS                           | a comma-separated list of URLs
 DEIS_DEPLOY_HOOK_SECRET_KEY                     | a private key used to compute the HMAC signature for deploy hooks.
 DEIS_DEPLOY_REJECT_IF_PROCFILE_MISSING          | rejects a deploy if the previous build had a Procfile but the current deploy is missing it. A 409 is thrown in the API. Prevents accidental process types removal. (default: "false", allowed values: "true", "false")
 DEIS_DEPLOY_PROCFILE_MISSING_REMOVE             | when turned on (default) any missing process type in a Procfile compared to the previous deploy is removed. When set to false will allow an empty Procfile to go through without removing missing process types, note that new images, configs and so on will get updated on all proc types.  (default: "true", allowed values: "true", "false")
-DEIS_DEFAULT_CONFIG_TAGS                        | set tags for all applications by default, for example: '{"role": "worker"}'. (default: '')
 KUBERNETES_NAMESPACE_DEFAULT_QUOTA_SPEC         | set resource quota to application namespace by setting [ResourceQuota](http://kubernetes.io/docs/admin/resourcequota/) spec, for example: `{"spec":{"hard":{"pods":"10"}}}`, restrict app owner to spawn more then 10 pods (default: "", no quota will be applied to namespace)
-
-### LDAP authentication settings
-
-Configuration options for LDAP authentication are detailed [here](https://pythonhosted.org/django-auth-ldap/reference.html).
-
-The following environment variables are available for enabling LDAP
-authentication of user accounts in the [Controller][] component:
-
-Setting            | Description
--------------------| ---------------------------------
-LDAP_ENDPOINT      | The URI of the LDAP server. If not specified, LDAP authentication is not enabled (default: "", example: ```ldap://hostname```).
-LDAP_BIND_DN       | The distinguished name to use when binding to the LDAP server (default: "")
-LDAP_BIND_PASSWORD | The password to use with LDAP_BIND_DN (default: "")
-LDAP_USER_BASEDN   | The distinguished name of the search base for user names (default: "")
-LDAP_USER_FILTER   | The name of the login field in the users search base (default: "username")
-LDAP_GROUP_BASEDN  | The distinguished name of the search base for user's groups names (default: "")
-LDAP_GROUP_FILTER  | The filter for user's groups (default: "", example: ```objectClass=person```)
 
 ### Global and per application settings
 
@@ -163,6 +125,23 @@ POLL_INTERVAL_SEC | The interval when Workflow Manager performs a version check,
 VERSIONS_API_URL  | The versions API URL (default: "<https://versions-staging.deis.com>")
 DOCTOR_API_URL    | The doctor API URL (default: "<https://doctor-staging.deis.com>")
 API_VERSION       | The version number Workflow Manager sends to the versions API (default: "v2")
+
+### LDAP authentication settings
+
+Configuration options for LDAP authentication are detailed [here](https://pythonhosted.org/django-auth-ldap/reference.html).
+
+The following environment variables are available for enabling LDAP
+authentication of user accounts in the [Controller][] component:
+
+Setting            | Description
+-------------------| ---------------------------------
+LDAP_ENDPOINT      | The URI of the LDAP server. If not specified, LDAP authentication is not enabled (default: "", example: ```ldap://hostname```).
+LDAP_BIND_DN       | The distinguished name to use when binding to the LDAP server (default: "")
+LDAP_BIND_PASSWORD | The password to use with LDAP_BIND_DN (default: "")
+LDAP_USER_BASEDN   | The distinguished name of the search base for user names (default: "")
+LDAP_USER_FILTER   | The name of the login field in the users search base (default: "username")
+LDAP_GROUP_BASEDN  | The distinguished name of the search base for user's groups names (default: "")
+LDAP_GROUP_FILTER  | The filter for user's groups (default: "", example: ```objectClass=person```)
 
 [Deploying Apps]: ../applications/deploying-apps.md
 [builder]: ../understanding-workflow/components.md#builder

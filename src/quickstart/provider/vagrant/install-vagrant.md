@@ -2,12 +2,12 @@
 
 ## Check Your Setup
 
-First check that the `helm` command is available and the version is v2.1.3 or newer.
+First check that the `helm` command is available and the version is v2.1.0 or newer.
 
 ```
 $ helm version
-Client: &version.Version{SemVer:"v2.1.3", GitCommit:"5cbc48fb305ca4bf68c26eb8d2a7eb363227e973", GitTreeState:"clean"}
-Server: &version.Version{SemVer:"v2.1.3", GitCommit:"5cbc48fb305ca4bf68c26eb8d2a7eb363227e973", GitTreeState:"clean"}
+Client: &version.Version{SemVer:"v2.1.0", GitCommit:"b7b648456ba15d3d190bb84b36a4bc9c41067cf3", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.1.0", GitCommit:"b7b648456ba15d3d190bb84b36a4bc9c41067cf3", GitTreeState:"clean"}
 ```
 
 Ensure the `kubectl` client is installed and can connect to your Kubernetes cluster.
@@ -27,7 +27,7 @@ $ helm repo add deis https://charts.deis.com/workflow
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace deis --set router.host_port.enabled=true
+$ helm install deis/workflow --namespace deis
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.

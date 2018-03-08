@@ -26,26 +26,22 @@ See [Configuring Object Storage][] for details on removing this operational comp
 
 ## Review Security Considerations
 
-There are some additional security-related considerations when running Workflow in production.
+There are some additional security-related considerations when running Workflow in production, and
+users can consider enabling a firewall on the CoreOS hosts as well as the router component.
+
 See [Security Considerations][] for details.
 
 
-## Registration is Admin-Only
+## Change Registration Mode
 
-By default, registration with the Workflow controller is in "admin_only" mode. The first user
-to run a `deis register` command becomes the initial "admin" user, and registrations after that
-are disallowed unless requested by an admin.
+Changing the registration process is highly recommended in production. By default, registrations
+for a new cluster are open to anyone with the proper URL. Once the admin user has registered with a
+new cluster, it is recommended to either turn off registrations or enable the admin-only
+registration feature. It is also recommended to disable signups for the Grafana dashboards.
 
-Please see the following documentation to learn about changing registration mode:
+Please see the following documentation:
 
  - [Customizing Controller][]
-
-## Disable Grafana Signups
-
-It is also recommended to disable signups for the Grafana dashboards.
-
-Please see the following documentation to learn about disabling Grafana signups:
-
  - [Customizing Monitor][]
 
 
@@ -54,12 +50,6 @@ Please see the following documentation to learn about disabling Grafana signups:
 Using TLS to encrypt traffic (including Workflow client traffic, such as login credentials) is
 crucial. See [Platform SSL][] for the platform.
 
-## Scale Routers
-
-If all router pods in your cluster become unavailable then you will be unable to access the workflow API or
-any deployed applications. To reduce the potential of this happening it is recommended that you scale the
-deis-router Deployment to run more than one router pod. This can be accomplished by running
-`kubectl --namespace=deis scale --replicas=2 deployment/deis-router`
 
 [configuring object storage]: ../installing-workflow/configuring-object-storage.md
 [customizing controller]: tuning-component-settings.md#customizing-the-controller
